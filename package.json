@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/mgalicer/weather-clock-server#readme",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "get-json": "0.0.3",
     "request": "^2.72.0"
   }
 }
