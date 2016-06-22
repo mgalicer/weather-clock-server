@@ -1,0 +1,23 @@
+{
+  "name": "weather-clock-server",
+  "version": "1.0.0",
+  "description": "Server built in Node and Express that provides the Arduino MKR1000 controlling the weather clock a small JSON response containing the weather forecast for the next 12 hours.",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgalicer/weather-clock-server.git"
+  },
+  "author": "Mari Galicer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mgalicer/weather-clock-server/issues"
+  },
+  "homepage": "https://github.com/mgalicer/weather-clock-server#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.72.0"
+  }
+}
