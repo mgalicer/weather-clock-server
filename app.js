@@ -1,10 +1,12 @@
 'use strict';
 
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
 const app = express();
 const getJSON = require('get-json');
 const weatherURL = 'https://api.forecast.io/forecast/' + process.env.WEATHER_KEY + '/40.6974881,-73.979681?exclude=[minutely,alerts,flags,daily]';
+
+app.set('port', (process.env.PORT || 3000));
 
 app.get('/weather', (req, res) => {
   getJSON(weatherURL, (err, response) => {
@@ -21,6 +23,6 @@ app.get('/weather', (req, res) => {
   })
 });
 
-app.listen(3000, () => {
+app.listen(app.get('port'), () => {
   console.log('Example app listening on port 3000!');
 });
