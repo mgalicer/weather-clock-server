@@ -5,7 +5,7 @@ const app = express();
 const getJSON = require('get-json');
 const weatherURL = 'https://api.forecast.io/forecast/' + process.env.WEATHER_KEY + '/40.6974881,-73.979681?exclude=[minutely,alerts,flags,daily]';
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 5000));
 
 app.get('/weather', (req, res) => {
   getJSON(weatherURL, (err, response) => {
@@ -13,7 +13,7 @@ app.get('/weather', (req, res) => {
     const weatherData = response.hourly.data;
     for(var i = 0; i < 12; i++) {
       let obj = {};
-      obj.time = weatherData[i].time;
+      obj.time = convertTimestamp(weatherData[i].time);
       obj.temp = weatherData[i].apparentTemperature;
       obj.precip = weatherData[i].precipProbability;
       hourlyWeather.push(obj);
@@ -21,6 +21,11 @@ app.get('/weather', (req, res) => {
     res.send(hourlyWeather)
   })
 });
+
+function convertTimestamp(stamp) {
+  const date = new Date(stamp);
+  return date.getHours();
+}
 
 app.listen(app.get('port'), () => {
   console.log('Example app listening on port 3000!');
