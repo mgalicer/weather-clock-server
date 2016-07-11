@@ -1,30 +1,32 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const getJSON = require('get-json');
 const weatherURL = 'https://api.forecast.io/forecast/' + process.env.WEATHER_KEY + '/40.6974881,-73.979681?exclude=[minutely,alerts,flags,daily]';
+const offset = 4;
 
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/weather', (req, res) => {
   getJSON(weatherURL, (err, response) => {
-    let hourlyWeather = [];
+    if(err) {console.log(err)}
+    let hourlyWeather = "";
     const weatherData = response.hourly.data;
     for(var i = 0; i < 12; i++) {
-      let obj = {};
-      obj.time = convertTimestamp(weatherData[i].time);
-      obj.temp = weatherData[i].apparentTemperature;
-      obj.precip = weatherData[i].precipProbability;
-      hourlyWeather.push(obj);
+      hourlyWeather += convertTimestamp(weatherData[i].time) + ',';
+      hourlyWeather += weatherData[i].apparentTemperature + ',';
+      hourlyWeather += weatherData[i].precipProbability + ';';
     }
     res.send(hourlyWeather)
   })
 });
 
 function convertTimestamp(stamp) {
-  const date = new Date(stamp);
-  return date.getHours();
+  const date = new Date(stamp * 1000);
+  const hours = date.getHours();
+  return hours
 }
 
 app.listen(app.get('port'), () => {
