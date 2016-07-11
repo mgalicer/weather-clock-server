@@ -25,7 +25,7 @@ app.get('/weather', (req, res) => {
 
 function convertTimestamp(stamp) {
   const date = new Date(stamp * 1000);
-  const hours = date.getHours() - 4;
+  const hours = date.getHours();
   return hours
 }
 
