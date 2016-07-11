@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+const moment = require('moment-timezone');
 const express = require('express');
 const app = express();
 const getJSON = require('get-json');
@@ -19,14 +20,14 @@ app.get('/weather', (req, res) => {
       hourlyWeather += weatherData[i].apparentTemperature + ',';
       hourlyWeather += weatherData[i].precipProbability + ';';
     }
-    res.send(hourlyWeather)
+    res.send(hourlyWeather);
   })
 });
 
 function convertTimestamp(stamp) {
-  const date = new Date(stamp * 1000);
-  const hours = date.getHours();
-  return hours
+  const date = moment.tz(new Date(stamp * 1000), 'America/New_York');
+  const hour = new Date(date).getHours();
+  return hour
 }
 
 app.listen(app.get('port'), () => {
