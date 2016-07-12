@@ -25,8 +25,7 @@ app.get('/weather', (req, res) => {
 });
 
 function convertTimestamp(stamp) {
-  const date = moment.tz(new Date(stamp * 1000), 'America/New_York');
-  const hour = new Date(date).getHours();
+  const hour = moment.tz(new Date(stamp * 1000), 'America/New_York').format("HH");
   return hour
 }
 
