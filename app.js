@@ -37,6 +37,8 @@ function convertTimestamp(stamp) {
   const hour = moment.tz(new Date(stamp * 1000), 'America/New_York').format("HH");
   if(hour > 12) {
     return hour - 12
+  } else if(hour == 0) {
+    return 12
   } else {
     return hour
   }
