@@ -15,14 +15,23 @@ app.get('/weather', (req, res) => {
     if(err) {console.log(err)}
     let hourlyWeather = "";
     const weatherData = response.hourly.data;
-    for(var i = 0; i < 12; i++) {
-      hourlyWeather += convertTimestamp(weatherData[i].time) + ',';
-      hourlyWeather += weatherData[i].apparentTemperature + ',';
-      hourlyWeather += weatherData[i].precipProbability + ';';
+    for(let i = 0; i < 12; i++) {
+      const timestamp = convertTimestamp(weatherData[i].time);
+      const temp = parseInt(weatherData[i].apparentTemperature).toFixed();
+      const precip = parseInt(weatherData[i].precipProbability) * 100;
+      hourlyWeather += pad(timestamp, 2) + ',';
+      hourlyWeather += pad(temp, 3) + ',';
+      hourlyWeather += pad(precip, 3) + ';';
     }
     res.send(hourlyWeather);
   })
 });
+
+function pad(num, size) {
+  const str = "0000" + num;
+  const padStr = str.substring(str.length - size);
+  return padStr
+}
 
 function convertTimestamp(stamp) {
   const hour = moment.tz(new Date(stamp * 1000), 'America/New_York').format("HH");
